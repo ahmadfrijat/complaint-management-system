@@ -1,70 +1,67 @@
 'use strict';
 
-const fs = require('fs');
 const express = require('express');
-const Collection = require('../models/data-collection.js');
-const acl = require('../auth/middleware/acl.js');
-const bearerAuth = require('../auth/middleware/bearer.js');
-
+const validator = require('../middleware/validator.js');
+const Complaint = require('../models/data-collection-class.js');
+const complaintModel = require('../models/complaint.js')
+const complaint = new Complaint(complaintModel);
 const router = express.Router();
 
 
-const models = new Map();
+router.post('/',addcomplaint);
+router.get('/',getcomplaint);
+router.get('/:id', validator, getcomplaintById);
+router.put('/:id', validator, updatecomplaint);
+router.delete('/:id', validator, deletecomplaint);
 
-router.param('model', (req, res, next) => {
-  const modelName = req.params.model;
-  if (models.has(modelName)) {
-    req.model = models.get(modelName);
-    next();
-  } else {
-    const fileName = `${__dirname}/../models/${modelName}/model.js`;
-    if (fs.existsSync(fileName)) {
-      const model = require(fileName);
-      models.set(modelName, new Collection(model));
-      req.model = models.get(modelName);
-      next();
-    }
-    else {
-      next("Invalid Model");
-    }
+
+async function addcomplaint(req,res) {
+
+    const complaintObject = req.body;
+  try {
+    const resObj = await complaint.create(complaintObject);
+    res.status(201).json(resObj);
+  } catch (error) {
+    throw new Error(error.message);
   }
-});
-
-router.get('/:model',bearerAuth, handleGetAll);
-router.get('/:model/:id',bearerAuth, handleGetOne);
-router.post('/:model',bearerAuth,acl('create'), handleCreate);
-router.put('/:model/:id',bearerAuth,acl('update'), handleUpdate);
-router.delete('/:model/:id',bearerAuth,acl('delete'), handleDelete);
-
-async function handleGetAll(req, res) {
-  let allRecords = await req.model.get();
-  res.status(200).json(allRecords);
 }
 
-async function handleGetOne(req, res) {
-  const id = req.params.id;
-  let theRecord = await req.model.get(id)
-  res.status(200).json(theRecord);
+async function getcomplaint(req,res,next) {
+    try {
+        const resObj = await complaint.read();
+        res.json(resObj);
+      } catch (error) {
+        next(error);
+      }
 }
 
-async function handleCreate(req, res) {
-  let obj = req.body;
-  let newRecord = await req.model.create(obj);
-  res.status(201).json(newRecord);
+async function getcomplaintById(req,res,next) {
+    try {
+        const resObj = await complaint.read(req.params.id);
+        res.json(resObj[0]);
+      } catch (error) {
+        next(error);
+      }
 }
 
-async function handleUpdate(req, res) {
-  const id = req.params.id;
-  const obj = req.body;
-  let updatedRecord = await req.model.update(id, obj)
-  res.status(200).json(updatedRecord);
+async function updatecomplaint(req,res) {
+    const complaintObject = req.body;
+    try {
+      const resObj = await complaint.update(req.params.id, complaintObject);
+      res.json(resObj);
+    } catch (error) {
+      throw new Error(error.message);
+    }
 }
 
-async function handleDelete(req, res) {
-  let id = req.params.id;
-  let deletedRecord = await req.model.delete(id);
-  res.status(200).json(deletedRecord);
-}
+async function deletecomplaint(req,res,next) {
+    try {
+        const resObj = await complaint.delete(req.params.id);
+        res.json(resObj);
+      } catch (error) {
+        next(error);
+      }
 
+}
 
 module.exports = router;
