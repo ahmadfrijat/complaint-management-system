@@ -1,11 +1,11 @@
 import React from 'react';
-import Complaint from './components/complaint/complaint.js';
+import Routes from './routes/index.js';
 
 
 function App() {
   return (
     <>
-      <Complaint />
+      <Routes/>
     </>
   );
 }

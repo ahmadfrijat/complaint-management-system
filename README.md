@@ -1,5 +1,22 @@
 # Getting Started with Create React App
 
+
+# How to activate server side :
+
+* ```npm init -y ```
+* ```npm i express dotenv cors morgan mongoose bcrypt base-64 jsonwebtoken ```
+* ```npm i -D jest @code-fellows/supergoose ```
+
+# to start mongo server :
+
+* ```sudo service mongod start ```
+
+# How to initialize/run react application :
+
+* ```npm i```
+* ```npm start```
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

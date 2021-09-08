@@ -1,0 +1,118 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding:0;
+    width: 100%;
+}
+
+
+form {
+
+    display:flex;
+    flex-direction:column;
+    margin-right: 2em;
+
+    label {
+        display: flex;
+        flex-direction:column;
+        margin-bottom: 1em;
+    }
+
+    ul {
+        list-style-type:none;
+        margin:0;
+        padding:0;
+        text-align: center;
+        margin-left: 50px;
+        margin-bottom: 20px;
+        // margin-left: 400px;
+
+        li {
+
+            align-items: center;
+            display:flex;
+            flex-direction:row;
+            font-size: .75em;
+            margin: .75em .5em;
+
+            &.complete-true {
+              span {
+                background: pink;
+                text-decoration:line-through;
+                &:hover {
+                   background: seagreen;
+                }
+              }
+            }
+
+            span {
+                background: #e0e0e0;
+                cursor:pointer;
+                &:hover {
+                    background: pink;
+                }
+            }
+             span, input {
+                 border: .5px solid #eee;
+                 display:inline-block;
+                 padding: .2em .25em;
+                 width: 300px;
+             }
+
+            button {
+                background: transparent;
+                border:none;
+                color:blue;
+                cursor:pointer;
+                padding:0;
+                margin: 0 .75em;
+            }
+
+        }
+    }
+
+}
+
+
+.card-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 40px;
+    padding: 0;
+}
+
+ .card{
+        height: 395px;
+        width: 350px;
+        margin-top: 100px;
+        margin-bottom: 3%;
+        border: 1px solid gray;
+        box-shadow: 0 0 #585858, 0 0 #585858, 0 0 10px #585858;
+}
+.card:hover{
+    cursor: pointer;
+    background-color: rgb(232, 219, 255);;
+}
+.status{
+    width: 20%;
+    font-family: none;
+    font-size: 1em;
+    height: 65%;
+    border-radius: 15px;
+}
+
+
+.card-text{
+    text-align: center;
+    line-height: 5;
+    font-size: 15px;
+    font-weight: bold;
+
+}
+
+.complists{
+    float: right;
+    margin-top: -544px;
+    margin-right: 333px;
+}
