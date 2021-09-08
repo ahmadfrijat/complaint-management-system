@@ -1,5 +1,6 @@
 # Getting Started with Create React App
 
+## Author: Ahmad Al-frijat
 
 # How to activate server side :
 
